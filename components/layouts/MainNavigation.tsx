@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { useState } from 'react';
+import Dropdown from '../generic/dropdown/Dropdown';
+import DropDownIcon from '../icons/dropdown-icon';
 import styles from './MainNavigation.module.css';
 
 export interface IMainNavigation {
@@ -14,6 +17,8 @@ const MainNavigation: React.FC<IMainNavigation> = ({
   browse,
   addlisting,
 }) => {
+  const [dropdown, setDropdown] = useState(false);
+  const handleDropdown = () => setDropdown(!dropdown);
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -28,7 +33,9 @@ const MainNavigation: React.FC<IMainNavigation> = ({
             <Link href="/search">{search}</Link>
           </li>
           <li>
-            <Link href="/browse">{browse}</Link>
+            <a onClick={handleDropdown}>{browse}</a>
+            <DropDownIcon />
+            {dropdown && <Dropdown />}
           </li>
           <li>
             <Link href="/add-listing">{addlisting}</Link>
